@@ -96,7 +96,7 @@ Proyek ini dibangun dengan serangkaian fitur yang membuatnya fungsional, akurat,
 
 1.  Clone repository ini ke komputer kamu:
     ```bash
-    git clone [https://github.com/zerocool979/possibility-of-falling-in-love.git](https://github.com/zerocool979/possibility-of-falling-in-love.git)
+    git clone https://github.com/zerocool979/possibility-of-falling-in-love.git
     cd possibility-of-falling-in-love
     ```
 
