@@ -111,4 +111,4 @@ GitHub: [@zerocool979](https://github.com/zerocool979)
 
 ---
 
-> _"Machine Learning can’t guarantee true love… but hey, at least it can give you a hint!"_ – This App
+> _"Machine Learning can’t guarantee true love… but hey, at least it can give you a hint!"_ – someone strange
