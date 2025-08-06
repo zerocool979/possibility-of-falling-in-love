@@ -4,462 +4,635 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prediksi Kemungkinan Jatuh Cinta</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary-color: #ff6f61;
-            --secondary-color: #4a4a4a;
-            --background-color: #f0f2f5;
-            --text-color: #333;
-            --light-text-color: #777;
-            --form-bg-color: #ffffff;
-            --border-color: #e0e0e0;
-            --success-color: #28a745;
+            --primary-color: #ff4d6d;
+            --secondary-color: #6930c3;
+            --accent-color: #00bbf9;
+            --dark-color: #212529;
+            --light-color: #f8f9fa;
+            --success-color: #38b000;
+            --warning-color: #ffaa00;
+            --danger-color: #ef233c;
+            --border-radius: 12px;
+            --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
-
         body {
-            font-family: 'Montserrat', sans-serif;
-            background-color: var(--background-color);
-            color: var(--text-color);
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: var(--dark-color);
             margin: 0;
             padding: 0;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
+            line-height: 1.6;
         }
-
         .container {
-            background-color: var(--form-bg-color);
-            padding: 3rem;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            background-color: white;
+            padding: 2.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
             width: 100%;
-            max-width: 800px;
-            text-align: center;
+            max-width: 900px;
+            margin: 2rem;
+            position: relative;
+            overflow: hidden;
         }
-
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color), var(--accent-color));
+        }
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--dark-color);
+            margin-top: 0;
+        }
         h1 {
             color: var(--primary-color);
-            font-weight: 700;
+            font-size: 2.5rem;
             margin-bottom: 0.5rem;
+            text-align: center;
+            position: relative;
+            padding-bottom: 1rem;
         }
-
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            border-radius: 2px;
+        }
         .subtitle {
-            color: var(--light-text-color);
-            font-weight: 400;
-            margin-bottom: 2rem;
+            color: var(--dark-color);
+            opacity: 0.8;
+            text-align: center;
+            margin-bottom: 2.5rem;
+            font-size: 1.1rem;
         }
-
-        form {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
         .form-section {
             display: none;
-            text-align: left;
-            animation: fadeIn 0.5s ease-in-out;
+            animation: fadeInUp 0.5s ease-out;
         }
         .form-section.active {
             display: block;
         }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
         .form-section h2 {
-            border-bottom: 2px solid var(--primary-color);
-            padding-bottom: 0.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        label {
-            font-weight: 600;
-            margin-bottom: 0.5rem;
             color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            position: relative;
+            padding-bottom: 0.5rem;
         }
-
-        .slider-group {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
+        .form-section h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background-color: var(--accent-color);
+            border-radius: 3px;
         }
-
-        input[type="text"] {
+        .form-group {
+            margin-bottom: 1.8rem;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.7rem;
+            font-weight: 500;
+            color: var(--dark-color);
+            font-size: 1.05rem;
+        }
+        .input-group {
+            position: relative;
+        }
+        input[type="text"], input[type="number"] {
             width: 100%;
-            padding: 12px;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            box-sizing: border-box;
+            padding: 14px 16px;
+            border: 2px solid #e9ecef;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: var(--transition);
+            background-color: #f8f9fa;
         }
-        
+        input[type="text"]:focus, input[type="number"]:focus {
+            border-color: var(--accent-color);
+            background-color: white;
+            box-shadow: 0 0 0 3px rgba(0, 187, 249, 0.2);
+            outline: none;
+        }
+        .slider-container {
+            margin-top: 1.5rem;
+        }
+        .slider-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+        .slider-value {
+            font-weight: 600;
+            color: var(--primary-color);
+            font-size: 1.1rem;
+            min-width: 30px;
+            text-align: center;
+            background-color: rgba(255, 77, 109, 0.1);
+            padding: 2px 8px;
+            border-radius: 20px;
+        }
         input[type="range"] {
-            width: 80%;
             -webkit-appearance: none;
-            height: 8px;
-            background: #ddd;
+            width: 100%;
+            height: 10px;
+            background: #e9ecef;
             border-radius: 5px;
             outline: none;
+            transition: var(--transition);
+        }
+        input[type="range"]:hover {
+            background: #dee2e6;
         }
         input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
-            width: 20px;
-            height: 20px;
+            width: 24px;
+            height: 24px;
             background: var(--primary-color);
             border-radius: 50%;
             cursor: pointer;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 2px 10px rgba(255, 77, 109, 0.3);
+            transition: var(--transition);
         }
-        .slider-value {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--primary-color);
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+            box-shadow: 0 3px 15px rgba(255, 77, 109, 0.4);
         }
-
         .nav-buttons {
             display: flex;
             justify-content: space-between;
-            margin-top: 2rem;
+            margin-top: 3rem;
         }
-
-        .nav-buttons button {
-            padding: 12px 25px;
+        .btn {
+            padding: 14px 30px;
             font-size: 1rem;
             font-weight: 600;
             border: none;
-            border-radius: 8px;
+            border-radius: var(--border-radius);
             cursor: pointer;
-            transition: background-color 0.3s, transform 0.2s;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
         }
-        
-        .nav-buttons button:hover {
-            transform: translateY(-2px);
+        .btn i {
+            margin-right: 8px;
         }
-
-        #prevBtn {
-            background-color: var(--border-color);
-            color: var(--secondary-color);
+        .btn-prev {
+            background-color: #e9ecef;
+            color: var(--dark-color);
         }
-        #prevBtn:hover {
-            background-color: #ccc;
+        .btn-prev:hover {
+            background-color: #dee2e6;
+            transform: translateX(-3px);
         }
-        #nextBtn, #submitBtn {
+        .btn-next, .btn-submit {
             background-color: var(--primary-color);
             color: white;
-            box-shadow: 0 4px 10px rgba(255, 111, 97, 0.3);
+            box-shadow: 0 4px 15px rgba(255, 77, 109, 0.3);
         }
-        #nextBtn:hover, #submitBtn:hover {
-            background-color: #e55c50;
+        .btn-next:hover, .btn-submit:hover {
+            background-color: #ff2d4d;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 77, 109, 0.4);
         }
-
-        .result {
+        .btn-submit {
+            background-color: var(--secondary-color);
+            box-shadow: 0 4px 15px rgba(105, 48, 195, 0.3);
+        }
+        .btn-submit:hover {
+            background-color: #5a20b5;
+            box-shadow: 0 6px 20px rgba(105, 48, 195, 0.4);
+        }
+        .result-container {
             margin-top: 3rem;
-            padding: 2rem;
-            border-radius: 12px;
-            background-color: #e8f5e9;
-            border: 1px solid var(--success-color);
-            color: var(--success-color);
-            text-align: left;
+            animation: fadeIn 0.8s ease-out;
         }
-        .result h2 {
-            color: var(--success-color);
-            font-weight: 700;
-            margin-bottom: 1rem;
+        .result-header {
+            text-align: center;
+            margin-bottom: 2rem;
         }
-        .result ul {
-            list-style-type: none;
-            padding-left: 0;
-            font-size: 1rem;
-            line-height: 1.6;
+        .result-header h2 {
+            color: var(--secondary-color);
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
         }
-        .result ul li {
-            margin-bottom: 0.75rem;
+        .result-header p {
+            color: #6c757d;
+            font-size: 1.1rem;
         }
-        .result ul li::before {
-            content: "•";
-            color: var(--success-color);
-            font-weight: bold;
-            display: inline-block;
-            width: 1em;
-            margin-left: -1em;
-        }
-        .result ul li strong {
-            color: var(--text-color);
-        }
-        .result ul li p {
-            font-weight: normal;
-            font-size: 0.9em;
-            color: var(--light-text-color);
-            margin-top: 0.25rem;
-        }
-
-        /* --- Gaya Baru untuk Visualisasi dan Umpan Balik --- */
-        .progress-bar-container {
-            width: 100%;
-            height: 30px;
-            background-color: #ddd;
-            border-radius: 15px;
-            overflow: hidden;
-            margin-bottom: 1rem;
-        }
-        .progress-bar {
-            height: 100%;
-            background-color: var(--success-color);
-            transition: width 1s ease-in-out;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            font-weight: bold;
-        }
-        .chart-container {
-            margin-top: 2rem;
+        .compatibility-meter {
+            margin: 2.5rem 0;
             text-align: center;
         }
-        .chart-container h3 {
-            color: var(--secondary-color);
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-        .bar-chart {
+        .meter-label {
             display: flex;
-            flex-direction: column;
-            gap: 10px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid var(--border-color);
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
         }
-        .bar-item {
+        .meter-container {
+            height: 30px;
+            background-color: #e9ecef;
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        .meter-bar {
+            height: 100%;
+            border-radius: 15px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            transition: width 1.5s ease-out;
             display: flex;
             align-items: center;
-            text-align: left;
-            font-size: 0.9em;
-        }
-        .bar-label {
-            width: 30%;
+            justify-content: flex-end;
+            padding-right: 15px;
+            color: white;
             font-weight: 600;
-            color: var(--secondary-color);
+            font-size: 0.9rem;
+            box-shadow: 0 2px 10px rgba(255, 77, 109, 0.3);
         }
-        .bar {
-            height: 20px;
-            background-color: var(--primary-color);
-            border-radius: 5px;
-            transition: width 1s ease-in-out;
+        .heart-container {
+            text-align: center;
+            margin: 1rem 0;
+        }
+        .heart-progress {
+            font-size: 5rem;
+            color: var(--primary-color);
+            transition: all 1.5s ease-out;
+            display: inline-block;
+        }
+        .factors-container {
+            margin: 3rem 0;
+        }
+        .factors-container h3 {
+            color: var(--secondary-color);
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+        .factor-item {
+            margin-bottom: 1.5rem;
+        }
+        .factor-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+        .factor-name {
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+        .factor-value {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        .factor-bar-container {
+            height: 12px;
+            background-color: #e9ecef;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        .factor-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-color), var(--secondary-color));
+            border-radius: 6px;
+            transition: width 1s ease-out;
+        }
+        .heatmap-container {
+            margin: 2rem 0;
+            text-align: center;
+        }
+        .heatmap {
+            display: inline-grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 1rem;
+        }
+        .heatmap-item {
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            background-color: #f8f9fa;
+            text-align: center;
+        }
+        .heatmap-trait {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .heatmap-score {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        .explanation-points {
+            margin: 2.5rem 0;
+            padding-left: 1.5rem;
+        }
+        .explanation-points li {
+            margin-bottom: 1.2rem;
+            position: relative;
+            padding-left: 1.8rem;
+        }
+        .explanation-points li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.5rem;
+            width: 12px;
+            height: 12px;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+        }
+        .explanation-points strong {
+            color: var(--secondary-color);
+            font-weight: 600;
         }
         .feedback-section {
-            margin-top: 2rem;
-            padding-top: 1.5rem;
-            border-top: 1px dashed var(--border-color);
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px dashed #dee2e6;
+            text-align: center;
         }
         .feedback-section h3 {
             color: var(--secondary-color);
             margin-bottom: 1rem;
         }
-        .feedback-buttons button {
-            padding: 10px 20px;
-            font-size: 1rem;
-            font-weight: 600;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            margin: 0 5px;
+        .feedback-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
         }
-        .feedback-buttons .btn-yes {
+        .feedback-btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+        }
+        .feedback-btn i {
+            margin-right: 8px;
+        }
+        .feedback-btn-yes {
             background-color: var(--success-color);
             color: white;
         }
-        .feedback-buttons .btn-no {
-            background-color: #dc3545;
+        .feedback-btn-yes:hover {
+            background-color: #2d9e00;
+            transform: translateY(-2px);
+        }
+        .feedback-btn-no {
+            background-color: var(--danger-color);
             color: white;
         }
+        .feedback-btn-no:hover {
+            background-color: #d90429;
+            transform: translateY(-2px);
+        }
+        .story-container {
+            margin-top: 2rem;
+            background-color: #f8f9fa;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.05);
+        }
+        .story-container h3 {
+            font-size: 1.6rem;
+            text-align: center;
+            color: var(--primary-color);
+        }
+        .story-container p {
+            font-style: italic;
+            color: #555;
+        }
+        .heatmap-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1.5rem;
+        }
+        .heatmap-table th, .heatmap-table td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #dee2e6;
+        }
+        .heatmap-table th {
+            background-color: var(--secondary-color);
+            color: white;
+            font-weight: 600;
+        }
+        .heatmap-table td {
+            background-color: #f8f9fa;
+        }
+        .alignment-score-high { background-color: rgba(60, 179, 113, 0.3); } /* Light green */
+        .alignment-score-medium { background-color: rgba(255, 165, 0, 0.3); } /* Light orange */
+        .alignment-score-low { background-color: rgba(220, 20, 60, 0.3); } /* Light red */
     </style>
 </head>
 <body>
-
     <div class="container">
-        <h1>Prediksi Kemungkinan Jatuh Cinta</h1>
-        <p class="subtitle">Berdasarkan data kencan kilat, kami akan menganalisis kemungkinan kecocokanmu.</p>
+        <h1>Love Compatibility Analyzer</h1>
+        <p class="subtitle">Prediksi Kemungkinan Kecocokan Pasangan Berdasarkan Data Kencan Kilat</p>
 
         <form action="/predict" method="post" id="predictionForm">
-
             <div class="form-section active">
-                <h2>1. Informasi Dasar</h2>
+                <h2>Informasi Dasar</h2>
                 <div class="form-group">
                     <label for="age">Usia Anda:</label>
-                    <input type="text" id="age" name="age" required placeholder="Contoh: 25">
+                    <input type="number" id="age" name="age" required placeholder="Contoh: 25">
                 </div>
                 <div class="form-group">
-                    <label for="age_o">Usia calon pasangan:</label>
-                    <input type="text" id="age_o" name="age_o" required placeholder="Contoh: 28">
+                    <label for="age_o">Usia Calon Pasangan:</label>
+                    <input type="number" id="age_o" name="age_o" required placeholder="Contoh: 28">
                 </div>
                 <div class="form-group">
                     <label for="samerace">Apakah kalian satu ras? (1=Ya, 0=Tidak):</label>
-                    <input type="text" id="samerace" name="samerace" required placeholder="Contoh: 1">
+                    <input type="text" id="samerace" name="samerace" required placeholder="Contoh: 1 atau 0">
                 </div>
                 <div class="form-group">
                     <label for="int_corr">Skor korelasi minat Anda (0.0 - 1.0):</label>
-                    <input type="text" id="int_corr" name="int_corr" required placeholder="Contoh: 0.75">
+                    <input type="number" step="0.01" id="int_corr" name="int_corr" required placeholder="Contoh: 0.75">
                 </div>
             </div>
 
             <div class="form-section">
-                <h2>2. Preferensi Calon Pasangan Anda (Skala 1-10)</h2>
-                <div class="form-group">
-                    <label for="pf_o_att">Seberapa penting daya tarik fisik bagi calon pasangan Anda? <span class="slider-value" id="pf_o_att_val">5</span></label>
-                    <div class="slider-group">
-                        <input type="range" id="pf_o_att" name="pf_o_att" min="1" max="10" value="5" required>
-                    </div>
+                <h2>Preferensi Calon Pasangan Anda (Skala 1-10)</h2>
+                <div class="form-group slider-container">
+                    <div class="slider-header"><label for="pf_o_att">Daya Tarik Fisik</label><span class="slider-value" id="pf_o_att_val">5</span></div>
+                    <input type="range" id="pf_o_att" name="pf_o_att" min="1" max="10" value="5" required>
                 </div>
-                <div class="form-group">
-                    <label for="pf_o_sin">Seberapa penting ketulusan bagi calon pasangan Anda? <span class="slider-value" id="pf_o_sin_val">5</span></label>
-                    <div class="slider-group">
-                        <input type="range" id="pf_o_sin" name="pf_o_sin" min="1" max="10" value="5" required>
-                    </div>
+                <div class="form-group slider-container">
+                    <div class="slider-header"><label for="pf_o_sin">Ketulusan</label><span class="slider-value" id="pf_o_sin_val">5</span></div>
+                    <input type="range" id="pf_o_sin" name="pf_o_sin" min="1" max="10" value="5" required>
                 </div>
-                <div class="form-group">
-                    <label for="pf_o_int">Seberapa penting kecerdasan bagi calon pasangan Anda? <span class="slider-value" id="pf_o_int_val">5</span></label>
-                    <div class="slider-group">
-                        <input type="range" id="pf_o_int" name="pf_o_int" min="1" max="10" value="5" required>
-                    </div>
+                <div class="form-group slider-container">
+                    <div class="slider-header"><label for="pf_o_int">Kecerdasan</label><span class="slider-value" id="pf_o_int_val">5</span></div>
+                    <input type="range" id="pf_o_int" name="pf_o_int" min="1" max="10" value="5" required>
                 </div>
-                <div class="form-group">
-                    <label for="pf_o_fun">Seberapa penting kesenangan bagi calon pasangan Anda? <span class="slider-value" id="pf_o_fun_val">5</span></label>
-                    <div class="slider-group">
-                        <input type="range" id="pf_o_fun" name="pf_o_fun" min="1" max="10" value="5" required>
-                    </div>
+                <div class="form-group slider-container">
+                    <div class="slider-header"><label for="pf_o_fun">Kesenangan</label><span class="slider-value" id="pf_o_fun_val">5</span></div>
+                    <input type="range" id="pf_o_fun" name="pf_o_fun" min="1" max="10" value="5" required>
                 </div>
-                <div class="form-group">
-                    <label for="pf_o_amb">Seberapa penting ambisi bagi calon pasangan Anda? <span class="slider-value" id="pf_o_amb_val">5</span></label>
-                    <div class="slider-group">
-                        <input type="range" id="pf_o_amb" name="pf_o_amb" min="1" max="10" value="5" required>
-                    </div>
+                <div class="form-group slider-container">
+                    <div class="slider-header"><label for="pf_o_amb">Ambisi</label><span class="slider-value" id="pf_o_amb_val">5</span></div>
+                    <input type="range" id="pf_o_amb" name="pf_o_amb" min="1" max="10" value="5" required>
                 </div>
-                <div class="form-group">
-                    <label for="pf_o_sha">Seberapa penting hobi yang sama bagi calon pasangan Anda? <span class="slider-value" id="pf_o_sha_val">5</span></label>
-                    <div class="slider-group">
-                        <input type="range" id="pf_o_sha" name="pf_o_sha" min="1" max="10" value="5" required>
-                    </div>
+                <div class="form-group slider-container">
+                    <div class="slider-header"><label for="pf_o_sha">Hobi yang Sama</label><span class="slider-value" id="pf_o_sha_val">5</span></div>
+                    <input type="range" id="pf_o_sha" name="pf_o_sha" min="1" max="10" value="5" required>
                 </div>
             </div>
 
             <div class="form-section">
-                <h2>3. Preferensi Anda Sendiri (Skala 1-10)</h2>
-                <div class="form-group">
-                    <label for="attr1_1">Seberapa penting daya tarik fisik bagi Anda? <span class="slider-value" id="attr1_1_val">5</span></label>
-                    <div class="slider-group">
-                        <input type="range" id="attr1_1" name="attr1_1" min="1" max="10" value="5" required>
-                    </div>
+                <h2>Preferensi Anda Sendiri (Skala 1-10)</h2>
+                <div class="form-group slider-container">
+                    <div class="slider-header"><label for="attr1_1">Daya Tarik Fisik</label><span class="slider-value" id="attr1_1_val">5</span></div>
+                    <input type="range" id="attr1_1" name="attr1_1" min="1" max="10" value="5" required>
                 </div>
-                <div class="form-group">
-                    <label for="sinc1_1">Seberapa penting ketulusan bagi Anda? <span class="slider-value" id="sinc1_1_val">5</span></label>
-                    <div class="slider-group">
-                        <input type="range" id="sinc1_1" name="sinc1_1" min="1" max="10" value="5" required>
-                    </div>
+                <div class="form-group slider-container">
+                    <div class="slider-header"><label for="sinc1_1">Ketulusan</label><span class="slider-value" id="sinc1_1_val">5</span></div>
+                    <input type="range" id="sinc1_1" name="sinc1_1" min="1" max="10" value="5" required>
                 </div>
-                <div class="form-group">
-                    <label for="intel1_1">Seberapa penting kecerdasan bagi Anda? <span class="slider-value" id="intel1_1_val">5</span></label>
-                    <div class="slider-group">
-                        <input type="range" id="intel1_1" name="intel1_1" min="1" max="10" value="5" required>
-                    </div>
+                <div class="form-group slider-container">
+                    <div class="slider-header"><label for="intel1_1">Kecerdasan</label><span class="slider-value" id="intel1_1_val">5</span></div>
+                    <input type="range" id="intel1_1" name="intel1_1" min="1" max="10" value="5" required>
                 </div>
-                <div class="form-group">
-                    <label for="fun1_1">Seberapa penting kesenangan bagi Anda? <span class="slider-value" id="fun1_1_val">5</span></label>
-                    <div class="slider-group">
-                        <input type="range" id="fun1_1" name="fun1_1" min="1" max="10" value="5" required>
-                    </div>
+                <div class="form-group slider-container">
+                    <div class="slider-header"><label for="fun1_1">Kesenangan</label><span class="slider-value" id="fun1_1_val">5</span></div>
+                    <input type="range" id="fun1_1" name="fun1_1" min="1" max="10" value="5" required>
                 </div>
-                <div class="form-group">
-                    <label for="amb1_1">Seberapa penting ambisi bagi Anda? <span class="slider-value" id="amb1_1_val">5</span></label>
-                    <div class="slider-group">
-                        <input type="range" id="amb1_1" name="amb1_1" min="1" max="10" value="5" required>
-                    </div>
+                <div class="form-group slider-container">
+                    <div class="slider-header"><label for="amb1_1">Ambisi</label><span class="slider-value" id="amb1_1_val">5</span></div>
+                    <input type="range" id="amb1_1" name="amb1_1" min="1" max="10" value="5" required>
                 </div>
-                <div class="form-group">
-                    <label for="shar1_1">Seberapa penting hobi yang sama bagi Anda? <span class="slider-value" id="shar1_1_val">5</span></label>
-                    <div class="slider-group">
-                        <input type="range" id="shar1_1" name="shar1_1" min="1" max="10" value="5" required>
-                    </div>
+                <div class="form-group slider-container">
+                    <div class="slider-header"><label for="shar1_1">Hobi yang Sama</label><span class="slider-value" id="shar1_1_val">5</span></div>
+                    <input type="range" id="shar1_1" name="shar1_1" min="1" max="10" value="5" required>
                 </div>
-
-                <div class="form-group">
-                    <label for="imprace">Seberapa penting ras bagi Anda? <span class="slider-value" id="imprace_val">5</span></label>
-                    <div class="slider-group">
-                        <input type="range" id="imprace" name="imprace" min="1" max="10" value="5" required>
-                    </div>
+                <div class="form-group slider-container">
+                    <div class="slider-header"><label for="imprace">Pentingnya Ras</label><span class="slider-value" id="imprace_val">5</span></div>
+                    <input type="range" id="imprace" name="imprace" min="1" max="10" value="5" required>
                 </div>
-                <div class="form-group">
-                    <label for="imprelig">Seberapa penting agama bagi Anda? <span class="slider-value" id="imprelig_val">5</span></label>
-                    <div class="slider-group">
-                        <input type="range" id="imprelig" name="imprelig" min="1" max="10" value="5" required>
-                    </div>
+                <div class="form-group slider-container">
+                    <div class="slider-header"><label for="imprelig">Pentingnya Agama</label><span class="slider-value" id="imprelig_val">5</span></div>
+                    <input type="range" id="imprelig" name="imprelig" min="1" max="10" value="5" required>
                 </div>
-                <div class="form-group">
-                    <label for="go_out">Seberapa sering Anda pergi keluar? <span class="slider-value" id="go_out_val">5</span></label>
-                    <div class="slider-group">
-                        <input type="range" id="go_out" name="go_out" min="1" max="10" value="5" required>
-                    </div>
+                <div class="form-group slider-container">
+                    <div class="slider-header"><label for="go_out">Frekuensi Pergi Keluar</label><span class="slider-value" id="go_out_val">5</span></div>
+                    <input type="range" id="go_out" name="go_out" min="1" max="10" value="5" required>
                 </div>
             </div>
 
             <div class="nav-buttons">
-                <button type="button" id="prevBtn" style="display: none;">Sebelumnya</button>
-                <button type="button" id="nextBtn">Selanjutnya</button>
-                <button type="submit" id="submitBtn" style="display: none;">Prediksi</button>
+                <button type="button" id="prevBtn" class="btn btn-prev" style="display: none;"><i class="fas fa-arrow-left"></i> Sebelumnya</button>
+                <button type="button" id="nextBtn" class="btn btn-next">Selanjutnya <i class="fas fa-arrow-right"></i></button>
+                <button type="submit" id="submitBtn" class="btn btn-submit" style="display: none;"><i class="fas fa-heart"></i> Prediksi</button>
             </div>
         </form>
 
         {% if result_title %}
-        <div class="result">
-            <h2>{{ result_title }}</h2>
-
-            <div class="progress-bar-container">
-                <div class="progress-bar" style="width: {{ prob_match * 100 }}%;">
-                    {{ (prob_match * 100) | round(2) }}%
-                </div>
+        <div class="result-container">
+            <div class="result-header">
+                <h2>{{ result_emoji }} {{ result_title }}</h2>
+                <p>Analisis kecocokan Anda selesai. Ini hasilnya:</p>
+            </div>
+            
+            <div class="heart-container">
+                <i class="fas fa-heart heart-progress animate__animated"></i>
+            </div>
+            
+            <div class="story-container animate__animated animate__fadeIn">
+                <h3>Kisah Cinta yang Mungkin...</h3>
+                <p>{{ love_story }}</p>
             </div>
 
-            <div class="chart-container">
+            <div class="heatmap-container animate__animated animate__fadeIn">
+                <h3>Analisis Keselarasan Preferensi</h3>
+                <table class="heatmap-table">
+                    <thead>
+                        <tr>
+                            <th>Faktor</th>
+                            <th>Anda (Prioritas)</th>
+                            <th>Pasangan (Preferensi)</th>
+                            <th>Keselarasan (0-10)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in heatmap_data %}
+                        <tr>
+                            <td>{{ item.trait }}</td>
+                            <td>{{ item.user_score }}</td>
+                            <td>{{ item.partner_pref }}</td>
+                            <td class="alignment-score-{% if item.alignment > 7 %}high{% elif item.alignment > 4 %}medium{% else %}low{% endif %}">{{ item.alignment }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="factors-container animate__animated animate__fadeIn">
                 <h3>3 Faktor Paling Berpengaruh dalam Model:</h3>
-                <div class="bar-chart">
-                    {% for feature, importance in top_3_features %}
-                    <div class="bar-item">
-                        <div class="bar-label">{{ feature.replace('_', ' ').replace('1 1', 'Anda').replace('o', 'Pasangan') | title }}</div>
-                        <div class="bar" style="width: {{ importance * 100 }}%;"></div>
+                {% for feature, importance in top_3_features %}
+                <div class="factor-item">
+                    <div class="factor-header">
+                        <span class="factor-name">{{ feature_labels.get(feature, feature.replace('_', ' ') | title) }}</span>
+                        <span class="factor-value">{{ (importance * 100) | round(2) }}%</span>
                     </div>
-                    {% endfor %}
+                    <div class="factor-bar-container"><div class="factor-bar" style="width:{{ importance * 100 }}%;"></div></div>
                 </div>
+                {% endfor %}
             </div>
 
-            <ul>
-                {% for point in explanation_points %}
-                <li>{{ point | safe }}</li>
-                {% endfor %}
-            </ul>
-
-            <div class="feedback-section">
+            <div class="explanation-points animate__animated animate__fadeIn">
+                <h3>Analisis Personalisasi</h3>
+                <ul>
+                    {% for point in explanation_points %}
+                    <li>{{ point | safe }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            
+            <div class="feedback-section animate__animated animate__fadeInUp">
                 <h3>Apakah hasil prediksi ini akurat?</h3>
                 <p>Umpan balik Anda sangat berharga untuk meningkatkan akurasi model di masa depan.</p>
                 <form action="/feedback" method="post" class="feedback-buttons">
                     <input type="hidden" name="prediction_result" value="{{ result_title }}">
-                    <button type="submit" name="is_accurate" value="Ya" class="btn-yes">Ya</button>
-                    <button type="submit" name="is_accurate" value="Tidak" class="btn-no">Tidak</button>
+                    <button type="submit" name="is_accurate" value="Ya" class="feedback-btn feedback-btn-yes"><i class="fas fa-check"></i> Ya, sangat akurat</button>
+                    <button type="submit" name="is_accurate" value="Tidak" class="feedback-btn feedback-btn-no"><i class="fas fa-times"></i> Tidak, kurang akurat</button>
                 </form>
             </div>
         </div>
         {% endif %}
-
     </div>
 
     <script>
-        // Logika untuk form multi-langkah
+        // Logika untuk form multi-langkah dengan Animate.css
         var currentTab = 0;
         var formSections = document.getElementsByClassName("form-section");
         var prevBtn = document.getElementById("prevBtn");
@@ -473,28 +646,15 @@
             if (n == 0) {
                 prevBtn.style.display = "none";
             } else {
-                prevBtn.style.display = "inline-block";
+                prevBtn.style.display = "inline-flex";
             }
             if (n == (formSections.length - 1)) {
                 nextBtn.style.display = "none";
-                submitBtn.style.display = "inline-block";
+                submitBtn.style.display = "inline-flex";
             } else {
-                nextBtn.style.display = "inline-block";
+                nextBtn.style.display = "inline-flex";
                 submitBtn.style.display = "none";
             }
-        }
-
-        function nextPrev(n) {
-            if (n == 1 && !validateForm()) return false;
-            if(formSections[currentTab]) {
-                formSections[currentTab].style.display = "none";
-            }
-            currentTab = currentTab + n;
-            if (currentTab >= formSections.length) {
-                document.getElementById("predictionForm").submit();
-                return false;
-            }
-            showTab(currentTab);
         }
 
         function validateForm() {
@@ -510,11 +670,42 @@
             return true;
         }
 
+        function nextPrev(n) {
+            if (n == 1 && !validateForm()) return false;
+            
+            const currentSection = formSections[currentTab];
+            currentSection.classList.remove('animate__fadeInUp');
+            
+            if (n === 1) {
+                currentSection.classList.add('animate__animated', 'animate__slideOutLeft');
+                setTimeout(() => {
+                    currentSection.style.display = "none";
+                    currentSection.classList.remove('animate__animated', 'animate__slideOutLeft');
+                    currentTab = currentTab + n;
+                    showTab(currentTab);
+                    formSections[currentTab].classList.add('animate__animated', 'animate__slideInRight');
+                }, 500);
+            } else {
+                currentSection.classList.add('animate__animated', 'animate__slideOutRight');
+                setTimeout(() => {
+                    currentSection.style.display = "none";
+                    currentSection.classList.remove('animate__animated', 'animate__slideOutRight');
+                    currentTab = currentTab + n;
+                    showTab(currentTab);
+                    formSections[currentTab].classList.add('animate__animated', 'animate__slideInLeft');
+                }, 500);
+            }
+
+            if (currentTab >= formSections.length) {
+                document.getElementById("predictionForm").submit();
+                return false;
+            }
+        }
+
         prevBtn.addEventListener("click", function() { nextPrev(-1) });
         nextBtn.addEventListener("click", function() { nextPrev(1) });
         showTab(currentTab);
-
-        // Logika untuk slider
+        
         document.querySelectorAll('input[type="range"]').forEach(slider => {
             const valueSpan = document.getElementById(slider.id + '_val');
             if (valueSpan) {
@@ -523,7 +714,22 @@
                 });
             }
         });
-    </script>
 
+        // Logika untuk animasi hati
+        const probMatchElement = document.getElementById('probMatchHidden');
+        if (probMatchElement) {
+            const probMatch = parseFloat(probMatchElement.value);
+            const heart = document.querySelector('.heart-progress');
+            if (!isNaN(probMatch)) {
+                const scale = 0.5 + (probMatch * 0.7);
+                heart.style.transform = `scale(${scale})`;
+                if (probMatch > 0.7) {
+                    heart.classList.add('animate__pulse', 'animate__infinite');
+                } else {
+                    heart.classList.remove('animate__pulse', 'animate__infinite');
+                }
+            }
+        }
+    </script>
 </body>
 </html>

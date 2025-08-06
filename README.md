@@ -16,11 +16,26 @@
 
 ---
 
+## Cara Menjalankan Secara Lokal
+
+1.  **Gambaran Umum**
+2.  **Struktur Proyek**
+3.  **Fitur-fitur Unggulan**
+4.  **Prasyarat**
+5.  **Cara Menjalankan Secara Lokal**
+6.  **Referensi dan Dataset**
+7.  **Feedback dan Kontribusi**
+8.  **Author**
+
+---
+
+---
+
 ## Gambaran Umum
 
 **Possibility of Falling in Love** adalah aplikasi berbasis **Flask** dan **Machine Learning** yang dikembangkan untuk memprediksi kemungkinan kecocokan romantis berdasarkan data dari *Speed Dating Experiment*.
 
-Proyek ini tidak hanya berfokus pada akurasi model, tetapi juga pada pengalaman pengguna yang unik, interaktif, dan informatif.
+Proyek ini tidak hanya berfokus pada akurasi model, tetapi juga pada pengalaman pengguna yang unik, interaktif, dan informatif, termasuk fitur tambahan berbasis AI dari **Google Gemini** untuk menghasilkan kisah cinta personal.
 
 ---
 
@@ -29,14 +44,21 @@ Proyek ini tidak hanya berfokus pada akurasi model, tetapi juga pada pengalaman 
 Berikut adalah arsitektur folder dan file yang membentuk proyek ini:
 
 - [possibility-of-falling-in-love/](https://github.com/zerocool979/possibility-of-falling-in-love)
+  - `./.env` – Isi kunci API Google Gemini milik mu  (Tidak boleh di-push ke GitHub!)
+  - `./.gitignore` – abaikan file yang tidak perlu di-commit, termasuk .env
   - `./app.py` – Backend Flask & logic prediksi utama
   - `./improve_model.py` – Script untuk data preprocessing dan tuning model
+  - `./check_models.py` – Skrip ini buat meriksa model Gemini apa saja yang tersedia (isi kunci API Google Gemini milik mu)
   - `./best_model.pkl` – Model RandomForestClassifier yang telah dioptimalkan
   - `imputer_improved.pkl` – Objek Imputer untuk menangani missing values
-  - `./feedback.log` – Log untuk menyimpan umpan balik dari pengguna
-  - `./Speed-Dating-Data.csv` – Dataset asli yang digunakan
+  - `./feedback.db` – Database SQLite untuk menyimpan umpan balik pengguna (ngayal udah nge-`deploy`...)
+  - `./Speed-Dating-Data.csv` – Dataset asli yang digunakan untuk pelatihan
 - [templates](./templates/)
-  - `./index.html` – Halaman antarmuka pengguna (UI)
+  - `./index.html` – Halaman antarmuka pengguna (UI) utama
+
+  ---
+
+> _"Beberapa file mungkin tidak tersedia dan akan otomatis tersedia jika user mempraktekannya langsung. Hal ini dikarenakan kami ingin user dapat merasakan bagaimana rasanya menggunakan proyek ini secara langsung"_
 
 ---
 
@@ -49,6 +71,11 @@ Proyek ini dibangun dengan serangkaian fitur yang membuatnya fungsional, akurat,
 - ✅   **Data Lengkap**: Selain data preferensi, model juga mempertimbangkan fitur-fitur penting seperti `imprace`, `imprelig`, dan `go_out`.
 - ✅   **Optimasi Otomatis**: Dilatih menggunakan `GridSearchCV` untuk menemukan *hyperparameter* terbaik secara sistematis.
 
+### Fitur Berbasis AI & Analisis
+- ✅   **Cerpen ala-ala AI**: Menggunakan API **Google Gemini** untuk secara kreatif menghasilkan kisah romantis personal berdasarkan data kecocokan dan detail pengguna.
+- ✅   **Analisis Personalisasi**: Memberikan analisis mendalam tentang faktor-faktor utama yang paling memengaruhi hasil prediksi.
+- ✅   **Visualisasi Keselarasan**: Diagram interaktif yang membandingkan prioritas Anda dengan preferensi pasangan.
+
 ### Antarmuka Pengguna (UI)
 - ✅   **Desain Modern**: Antarmuka web yang bersih, responsif, dan mudah digunakan.
 - ✅   **Formulir Multi-Langkah**: Input dibagi menjadi beberapa bagian untuk pengalaman yang intuitif dan tidak membosankan.
@@ -56,6 +83,12 @@ Proyek ini dibangun dengan serangkaian fitur yang membuatnya fungsional, akurat,
     - **Progress Bar**: Menampilkan probabilitas kecocokan secara visual.
     - **Diagram Batang**: Menunjukkan 3 faktor terpenting yang memengaruhi prediksi secara keseluruhan.
 - ✅   **Sistem Umpan Balik**: Fitur unik yang memungkinkan pengguna memberikan *feedback* tentang akurasi prediksi, yang datanya disimpan sebagai log untuk pengembangan di masa depan.
+
+---
+
+## Prasyarat
+- **Python 3.7+**
+- **Gitt** (untuk mengkloning repository)
 
 ---
 
@@ -69,23 +102,43 @@ Proyek ini dibangun dengan serangkaian fitur yang membuatnya fungsional, akurat,
 
 2.  Pastikan semua dependensi sudah terinstall. Jika belum, kamu bisa menginstal library yang diperlukan:
     ```bash
-    pip install pandas scikit-learn Flask
+    pip install -r requirements.txt
     ```
 
-3.  Jalankan *script* untuk melatih model yang optimal:
+3.  Konfigurasi API Google Gemini:
+  Aplikasi ini perlu kunci API dari Google Gemini untuk fitur cerita AI.
+  - Dapatkan kunci API dari (https://aistudio.google.com/app/apikey)
+  - Buat file `.env` di direktori utama proyek
+  - Paste API yang sudah kamu dapatkan sebelumnya kedalam file `.env`
+    ```bash
+    GEMINI_API_KEY="YOUR_API_KEY"
+    ```
+> _"Catatan Keamanan API: File .env sudah diabaikan oleh .gitignore, jadi kunci API aman dan tidak akan terunggah ke GitHub."_
+
+4.  Pelatihan Model:
+Jalankan skrip `improve_model.py` untuk melatih model Machine Learning dan menyimpan artefak yang diperlukan (`best_model.pkl` dan `imputer_improved.pkl`):
     ```bash
     python improve_model.py
     ```
+> _"Catatan: Langkah ini hanya perlu dilakukan satu kali."_
 
-4.  Setelah model selesai dilatih dan disimpan, jalankan server Flask:
-    ```bash
+5.  Menjalankan Server Flask:
+Setelah model selesai dilatih dan kunci API sudah dikonfigurasi, jalankan server Flask:
+    ```
     python app.py
     ```
 
-5.  Buka browser web kamu dan akses:
+6.  Buka browser web kamu dan akses:
     ```
     [http://127.0.0.1:5000/](http://127.0.0.1:5000/)
     ```
+
+7.  (Opsional) Memeriksa Model Gemini yang Tersedia:
+kalo misalnya kam mengalami error kuota atau model tidak ditemukan, kamu bisa menjalankan skrip berikut untuk melihat model yang tersedia untuk API key yang kamu punya:
+    ```
+    python check_models.py
+    ```
+> _"Catatan: Ganti variable yang mendefinisikan API pada baris kode **(api_key='paste api keynya disini')**. Setelah mendapatkan list, kamu bisa pilih salah satu modelnya untuk digunakan didalam app.py pada fungsi **generate_love_story(form_data, prob_match)** baris code 50 di variable **model**."_
 
 ---
 
