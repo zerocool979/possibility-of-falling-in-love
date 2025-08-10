@@ -1,87 +1,75 @@
 import pandas as pd
-import numpy as np
-from sklearn.model_selection import train_test_split, GridSearchCV, cross_val_score
+from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.impute import SimpleImputer
+from sklearn.model_selection import GridSearchCV
+# import pickle # Menggunakan joblib, jadi pickle tidak lagi dibutuhkan
 import joblib
 
-print("### Mulai Proses Penyempurnaan Model dan Data ###")
+def improve_and_save_model():
+    print("Memuat dataset...")
+    # Load the dataset
+    data = pd.read_csv('Speed-Dating-Data.csv', encoding='ISO-8859-1')
+    
+    # Preprocessing
+    print("Melakukan pra-pemrosesan data...")
+    # Select relevant features based on the previous model and your app's form
+    features = [
+        'age', 'age_o', 'samerace', 'go_out', 'imprace', 'imprelig', 'int_corr',
+        'attr1_1', 'sinc1_1', 'intel1_1', 'fun1_1', 'amb1_1', 'shar1_1',
+        'pf_o_att', 'pf_o_sin', 'pf_o_int', 'pf_o_fun', 'pf_o_amb', 'pf_o_sha'
+    ]
+    target = 'match'
+    
+    # Filter out rows with too many missing values in key features
+    data = data.dropna(subset=features + [target], how='any')
+    
+    X = data[features]
+    y = data[target]
+    
+    # Impute missing values with the mean
+    imputer = SimpleImputer(strategy='mean')
+    X_imputed = imputer.fit_transform(X)
+    
+    print("Melatih model dan mencari hyperparameter terbaik...")
+    # Define the model and parameter grid for GridSearchCV
+    model = RandomForestClassifier(random_state=42)
+    param_grid = {
+        'n_estimators': [100, 200],
+        'max_depth': [10, 20],
+        'min_samples_split': [2, 5]
+    }
+    
+    grid_search = GridSearchCV(model, param_grid, cv=5, scoring='accuracy', n_jobs=-1)
+    grid_search.fit(X_imputed, y)
+    
+    best_model = grid_search.best_estimator_
+    
+    print(f"Model terbaik ditemukan dengan parameter: {grid_search.best_params_}")
+    print(f"Akurasi model terbaik: {grid_search.best_score_:.4f}")
+    
+    print("Menyimpan model dan imputer...")
+    # Save the best model and the imputer using joblib
+    joblib.dump(best_model, 'best_model.pkl')
+    joblib.dump(imputer, 'imputer_improved.pkl')
+    
+    print("Model berhasil diperbarui dan disimpan.")
+import secrets
 
-# ----------------------------------------------------------------------------------
-# 1. Memuat dan Membersihkan Dataset (dengan fitur tambahan)
-# ----------------------------------------------------------------------------------
+def generate_secret_key(length=32):
+    """
+    Generates a strong, random string for use as a SECRET_KEY.
 
-print("Memuat dan membersihkan data dengan fitur-fitur baru...")
-try:
-    data = pd.read_csv('Speed-Dating-Data.csv', encoding='latin1')
-except FileNotFoundError:
-    print("Error: File 'Speed-Dating-Data.csv' tidak ditemukan. Pastikan file ada di direktori yang sama.")
-    exit()
+    Args:
+        length (int): The length of the key to generate. Defaults to 32.
 
-# Kolom 'match' adalah target kita
-data.dropna(subset=['match'], inplace=True)
+    Returns:
+        str: The generated secret key.
+    """
+    return secrets.token_urlsafe(length)
 
-# Memilih fitur-fitur yang lebih lengkap, termasuk yang baru
-features_to_use = [
-    'int_corr', 'age', 'age_o', 'samerace', 'pf_o_att', 'pf_o_sin', 
-    'pf_o_int', 'pf_o_fun', 'pf_o_amb', 'pf_o_sha', 'attr1_1', 'sinc1_1', 
-    'intel1_1', 'fun1_1', 'amb1_1', 'shar1_1',
-    # Fitur-fitur baru yang ditambahkan
-    'imprace', 'imprelig', 'go_out'
-]
-
-X = data[features_to_use]
-y = data['match']
-
-# Mengatasi nilai yang hilang (missing values)
-imputer = SimpleImputer(strategy='mean')
-X_imputed = imputer.fit_transform(X)
-X = pd.DataFrame(X_imputed, columns=X.columns)
-
-print(f"Jumlah nilai NaN setelah imputasi: {X.isnull().sum().sum()}")
-print(f"Jumlah fitur yang digunakan: {len(X.columns)}")
-
-# ----------------------------------------------------------------------------------
-# 2. Hyperparameter Tuning dengan GridSearchCV
-# ----------------------------------------------------------------------------------
-
-print("\nMencari parameter terbaik untuk model menggunakan GridSearchCV...")
-# Tentukan rentang parameter yang ingin diuji
-param_grid = {
-    'n_estimators': [100, 200, 300],  # Jumlah pohon dalam forest
-    'max_depth': [10, 20, None],       # Kedalaman maksimum pohon
-    'min_samples_split': [2, 5, 10],   # Jumlah minimum sampel untuk memisahkan node
-}
-
-# Inisialisasi model dan GridSearchCV
-rf = RandomForestClassifier(random_state=42)
-grid_search = GridSearchCV(estimator=rf, param_grid=param_grid, cv=3, n_jobs=-1, verbose=2)
-
-# Lakukan pencarian
-grid_search.fit(X, y)
-
-print("\n--- Hasil GridSearchCV ---")
-print(f"Parameter terbaik: {grid_search.best_params_}")
-print(f"Skor akurasi terbaik: {grid_search.best_score_:.4f}")
-
-# ----------------------------------------------------------------------------------
-# 3. Validasi Model dengan Cross-Validation
-# ----------------------------------------------------------------------------------
-
-print("\nMelakukan validasi silang (cross-validation) untuk model terbaik...")
-best_model = grid_search.best_estimator_
-cv_scores = cross_val_score(best_model, X, y, cv=5, n_jobs=-1)
-
-print(f"Skor akurasi cross-validation (5-fold): {cv_scores}")
-print(f"Rata-rata akurasi cross-validation: {np.mean(cv_scores):.4f}")
-
-# ----------------------------------------------------------------------------------
-# 4. Menyimpan Model Baru
-# ----------------------------------------------------------------------------------
-
-print("\nMenyimpan model terbaik dan imputer...")
-joblib.dump(best_model, 'best_model.pkl')
-joblib.dump(imputer, 'imputer_improved.pkl')
-
-print("Model dan imputer baru berhasil disimpan.")
-print("### Proses Penyempurnaan Selesai ###")
+if __name__ == '__main__':
+    improve_and_save_model()
+    print("membuat kunci......")
+    secret_key = generate_secret_key()
+    print(f"SECRET_KEY = '{secret_key}'")

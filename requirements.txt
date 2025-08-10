@@ -2,6 +2,8 @@ Flask
 python-dotenv
 numpy
 joblib
+pandas
 google-generativeai
 scikit-learn
 pandas
+werkzeug

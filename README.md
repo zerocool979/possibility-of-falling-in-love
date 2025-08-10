@@ -54,8 +54,18 @@ Berikut adalah arsitektur folder dan file yang membentuk proyek ini:
   - `./feedback.db` – Database SQLite untuk menyimpan umpan balik pengguna (ngayal udah nge-`deploy`...)
   - `./Speed-Dating-Data.csv` – Dataset asli yang digunakan untuk pelatihan
 - [templates](./templates/)
-  - `./index.html` – Halaman antarmuka pengguna (UI) utama
-
+  - `./index.html` – Halaman antarmuka pengguna (UI) Utama
+  - `./index.html` – Halaman antarmuka pengguna (UI) Pertama
+- [static](./static/)
+  - [css](./css/)
+    - `./komponen.css` – Berisi gaya untuk komponen UI spesifik.
+    - `./animasi.css` – adalah gaya untuk komponen yang ada
+    - `./style.css` – File gaya utama yang mendefinisikan tampilan keseluruhan aplikasi. Mencakup skema warna romantis, tipografi, dan tata letak responsif.
+  - [js](./js/)
+      - `./app_logic.js` – File JavaScript sisi klien utama.
+      - `./salju.js` – Skrip JavaScript terpisah untuk efek salju di latar belakang.
+  - [audio](./audio/)
+        - `./audio.mp3` – audio yang digunakan
   ---
 
 > _"Beberapa file mungkin tidak tersedia dan akan otomatis tersedia jika user mempraktekannya langsung. Hal ini dikarenakan kami ingin user dapat merasakan bagaimana rasanya menggunakan proyek ini secara langsung"_

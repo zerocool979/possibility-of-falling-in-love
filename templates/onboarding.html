@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selamat Datang! | Love Compatibility Analyzer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght=700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- CSS dari proyek Anda, mungkin perlu disesuaikan agar sesuai dengan gaya onboarding -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/komponen.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #ffcce6 0%, #f2e6ff 50%, #e6f2ff 100%);
+            color: #333; /* Warna teks yang kontras dengan background */
+        }
+        .container {
+            max-width: 600px;
+            padding: 3rem;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(255, 105, 180, 0.2);
+            text-align: center;
+            animation: fadeIn 1s forwards;
+            color: #333;
+        }
+        .container h1 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        .form-group input[type="text"],
+        .form-group input[type="date"],
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            color: #333;
+            background-color: #f9f9f9;
+        }
+        .form-group input[type="text"]:focus,
+        .form-group input[type="date"]:focus,
+        .form-group select:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 105, 180, 0.3);
+        }
+        .btn-submit {
+            background: linear-gradient(to right, #ff6b8b, #ff8e53);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 105, 180, 0.4);
+        }
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 105, 180, 0.6);
+        }
+        .error-message {
+            color: var(--danger-color);
+            margin-top: 1rem;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div class="container animate__animated animate__fadeIn">
+        <h1><i class="fas fa-heart"></i> Selamat Datang!</h1>
+        <p>Mari kita mulai dengan beberapa informasi dasar tentang Anda dan seseorang yang Anda sukai.</p>
+        
+        {% if error %}
+        <p class="error-message">{{ error }}</p>
+        {% endif %}
+
+        <form id="onboardingForm" action="/process_onboarding" method="post">
+            <div class="form-group">
+                <label for="user_name">Nama Anda:</label>
+                <input type="text" id="user_name" name="user_name" placeholder="Misal: Budi" required>
+            </div>
+            <div class="form-group">
+                <label for="user_gender">Jenis Kelamin Anda:</label>
+                <select id="user_gender" name="user_gender" required>
+                    <option value="" disabled selected>Pilih salah satu</option>
+                    <option value="male">Pria</option>
+                    <option value="female">Wanita</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="user_birth_date">Tanggal Lahir Anda:</label>
+                <input type="date" id="user_birth_date" name="user_birth_date" required>
+            </div>
+            <div class="form-group">
+                <label for="user_city">Kota Tempat Tinggal Anda:</label>
+                <input type="text" id="user_city" name="user_city" placeholder="Misal: Jakarta" required>
+            </div>
+
+            <hr style="margin: 2rem 0; border-color: rgba(255, 105, 180, 0.2);">
+
+            <h3>Tentang Seseorang yang Anda Suka</h3>
+            <div class="form-group">
+                <label for="partner_name">Nama Orang yang Anda Suka:</label>
+                <input type="text" id="partner_name" name="partner_name" placeholder="Misal: Siti" required>
+            </div>
+            <div class="form-group">
+                <label for="partner_gender">Jenis Kelamin Orang yang Anda Suka:</label>
+                <select id="partner_gender" name="partner_gender" required>
+                    <option value="" disabled selected>Pilih salah satu</option>
+                    <option value="male">Pria</option>
+                    <option value="female">Wanita</option>
+                </select>
+                <small style="color: #666;">Pilih jenis kelamin lawan jenis Anda.</small>
+            </div>
+
+            <!-- New fields for story personalization -->
+            <div class="form-group">
+                <label for="story_genre">Genre Cerita Favorit:</label>
+                <select id="story_genre" name="story_genre">
+                    <option value="romantic">Romantis</option>
+                    <option value="funny">Lucu</option>
+                    <option value="fantasy">Fantasi</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="user_hobby">Hobi Unik Anda:</label>
+                <input type="text" id="user_hobby" name="user_hobby" placeholder="Misal: main gitar, koleksi perangko">
+            </div>
+            
+            <button type="submit" class="btn-submit">Lanjutkan ke Analisis <i class="fas fa-arrow-right"></i></button>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const userGenderSelect = document.getElementById('user_gender');
+            const partnerGenderSelect = document.getElementById('partner_gender');
+
+            // Set initial partner gender based on user gender
+            function updatePartnerGender() {
+                if (userGenderSelect.value === 'male') {
+                    partnerGenderSelect.value = 'female';
+                } else if (userGenderSelect.value === 'female') {
+                    partnerGenderSelect.value = 'male';
+                } else {
+                    partnerGenderSelect.value = ''; // Reset if user gender is not selected
+                }
+            }
+
+            userGenderSelect.addEventListener('change', updatePartnerGender);
+            
+            // Initial call in case user_gender has a pre-selected value (e.g., from browser autofill)
+            updatePartnerGender(); 
+        });
+    </script>
+</body>
+</html>
