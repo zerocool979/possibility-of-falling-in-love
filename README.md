@@ -115,7 +115,7 @@ Proyek ini dibangun dengan serangkaian fitur yang membuatnya fungsional, akurat,
     pip install -r requirements.txt
     ```
 
-3.  Konfigurasi API Google Gemini:
+3.  **(Opsional, bisa langsung diskip)** Konfigurasi API Google Gemini:
   Aplikasi ini perlu kunci API dari Google Gemini untuk fitur cerita AI.
   - Dapatkan kunci API dari (https://aistudio.google.com/app/apikey)
   - Buat file `.env` di direktori utama proyek
